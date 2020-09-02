@@ -4,13 +4,22 @@ window.addEventListener("DOMContentLoaded", () => {
     ws = new WebSocket(`ws://localhost:3000/ws`);
     ws.addEventListener("open", onConnectionOpen);
     ws.addEventListener("message", onMessageReceived);
-
-    const queryParams = getQueryParams();
-    console.log(queryParams);
 });
 
 function onConnectionOpen(){
     console.log('Connection Opened');
+    const queryParams = getQueryParams();
+    console.log(queryParams);
+    if(!queryParams.name || !queryParams.group){
+        window.location.href = 'chat.html';
+        return;
+    }
+    const event = {
+        event: 'join',
+        groupName: queryParams.group,
+        name: queryParams.name
+    }
+    ws.send(event);
 }
 
 function onMessageReceived(event){
