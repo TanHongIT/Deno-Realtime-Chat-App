@@ -2,11 +2,26 @@ let ws;
 let chatUsersCtr = document.querySelector("#chatUsers");
 let chatUsersCount = document.querySelector("#chatUsersCount");
 let groupName = document.querySelector("#groupName");
+let sendMessageForm = document.querySelector("#messageSendForm");
+
 window.addEventListener("DOMContentLoaded", () => {
     ws = new WebSocket(`ws://localhost:3000/ws`);
     ws.addEventListener("open", onConnectionOpen);
     ws.addEventListener("message", onMessageReceived);
 });
+
+sendMessageForm.onsubmit = (ev) => {
+    ev.preventDefault();
+    if (!messageInput.value) {
+        return;
+    }
+    const event = {
+        event: "message",
+        data: messageInput.value,
+    };
+    ws.send(JSON.stringify(event));
+    messageInput.value = "";
+};
 
 function onConnectionOpen() {
     console.log('Connection Opened');

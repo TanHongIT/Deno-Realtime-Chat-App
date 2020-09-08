@@ -24,6 +24,18 @@ const usersMap = new Map();
 
 const groupsMap = new Map();
 
+/**
+ * groupName: [message1,message2]
+ * 
+ * {
+ *    userId: string,
+ *    name: string,
+ *    message: string
+ * }
+ * 
+ */
+const messagesMap = new Map();
+
 export default async function chat(ws) {
     console.log('Connected');
 
@@ -48,6 +60,20 @@ export default async function chat(ws) {
                 groupsMap.set(event.groupName, users);
 
                 emitEvent(event.groupName);
+                break;
+            case "message":
+                console.log("Message received ");
+                userObj = usersMap.get(userId);
+                const message = {
+                    userId,
+                    name: userObj.name,
+                    message: event.data,
+                };
+                const messages = messagesMap.get(userObj.groupName) || [];
+                messages.push(message);
+                messagesMap.set(userObj.groupName, messages);
+                emitMessage(userObj.groupName, message, userId);
+                break;
         }
     }
 }
@@ -69,4 +95,19 @@ function getDisplayUsers(groupName) {
     return users.map(u => {
         return { userId: u.userId, name: u.name };
     })
+}
+
+function emitMessage(groupName, message, senderId) {
+    const users = groupsMap.get(groupName) || [];
+    for (const user of users) {
+        const tmpMessage = {
+            ...message,
+            sender: user.userId === senderId ? "me" : senderId,
+        };
+        const event = {
+            event: "message",
+            data: tmpMessage,
+        };
+        user.ws.send(JSON.stringify(event));
+    }
 }
