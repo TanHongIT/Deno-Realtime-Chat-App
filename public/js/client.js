@@ -57,16 +57,21 @@ function onMessageReceived(event) {
             });
             break;
         case "message":
-            const el = document.createElement('div');
-            el.className = `message message-${event.data.sender === "me" ? "to" : "from"}`;
-            el.innerHTML = `
-                ${event.data.sender === "me" ? "" : `<h4>${event.data.name}</h4>`}
-                <p class="message-text">Lorem ipsum smth</p>`;
-                chatMessagesCtr.appendChild(el);
+            appendMessage(event.data);
             break;
+        case 'previousMessages':
+            event.data.forEach(appendMessage);
     }
 }
 
+function appendMessage(message){
+    const el = document.createElement('div');
+    el.className = `message message-${message.sender === "me" ? "to" : "from"}`;
+    el.innerHTML = `
+        ${message.sender === "me" ? "" : `<h4>${message.name}</h4>`}
+        <p class="message-text">${message.message}</p>`;
+    chatMessagesCtr.appendChild(el);
+}
 
 function getQueryParams() {
     const search = window.location.search.substring(1);

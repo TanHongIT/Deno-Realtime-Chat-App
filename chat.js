@@ -60,6 +60,7 @@ export default async function chat(ws) {
                 groupsMap.set(event.groupName, users);
 
                 emitEvent(event.groupName);
+                emitPreviousMessages(event.groupName,ws);
                 break;
             case "message":
                 console.log("Message received ");
@@ -111,4 +112,14 @@ function emitMessage(groupName, message, senderId) {
         };
         user.ws.send(JSON.stringify(event));
     }
+}
+
+function emitPreviousMessages(groupName, ws){
+    const messages = messagesMap.get(groupName) || [];
+
+    const event = {
+        event: 'previousMessages',
+        data: messages
+    };
+    ws.send(JSON.stringify(event));
 }
