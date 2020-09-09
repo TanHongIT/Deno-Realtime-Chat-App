@@ -100,4 +100,5 @@ leaveGroupBtn.onclick = () => {
         event: 'leave'
     }
     ws.send(JSON.stringify(event));
+    window.location.href = 'chat.html';
 }

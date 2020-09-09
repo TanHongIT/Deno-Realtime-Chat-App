@@ -48,13 +48,9 @@ export default async function chat(ws) {
 
         // If event is close,
         if (isWebSocketCloseEvent(data)) {
-            const userObj = usersMap.get(userId);
-            let users = groupsMap.get(userObj.groupName) ||[];
-            users = users.filter(u =>u.userId !== userId);
-            groupsMap.set(userObj.groupName, users);
-            usersMap.delete(userId);
-
-            emitEvent(userObj.groupName);
+            // Take out user from usersMap
+            leaveGroup(userId);
+            break;
         }
 
         let userObj;
@@ -87,8 +83,22 @@ export default async function chat(ws) {
                 messagesMap.set(userObj.groupName, messages);
                 emitMessage(userObj.groupName, message, userId);
                 break;
+            case 'leave':
+                leaveGroup(userId);
+                break;
         }
     }
+}
+
+function leaveGroup(userId) {
+    console.log(userId);
+    const userObj = usersMap.get(userId);
+    let users = groupsMap.get(userObj.groupName) || [];
+    users = users.filter(u => u.userId !== userId);
+    groupsMap.set(userObj.groupName, users);
+    usersMap.delete(userId);
+
+    emitEvent(userObj.groupName);
 }
 
 function emitEvent(groupName) {
