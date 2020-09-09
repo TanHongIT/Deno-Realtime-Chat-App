@@ -1,3 +1,4 @@
+import { isWebSocketCloseEvent } from "https://deno.land/std@0.67.0/ws/mod.ts";
 import { v4 } from "https://deno.land/std@0.67.0/uuid/mod.ts";
 
 /**
@@ -42,8 +43,19 @@ export default async function chat(ws) {
     const userId = v4.generate();
 
     for await (let data of ws) {
-        // console.log(data, typeof data);
+        console.log(data, typeof data);
         const event = typeof data === "string" ? JSON.parse(data) : data;
+
+        // If event is close,
+        if (isWebSocketCloseEvent(data)) {
+            const userObj = usersMap.get(userId);
+            let users = groupsMap.get(userObj.groupName) ||[];
+            users = users.filter(u =>u.userId !== userId);
+            groupsMap.set(userObj.groupName, users);
+            usersMap.delete(userId);
+
+            emitEvent(userObj.groupName);
+        }
 
         let userObj;
         switch (event.event) {
@@ -60,7 +72,7 @@ export default async function chat(ws) {
                 groupsMap.set(event.groupName, users);
 
                 emitEvent(event.groupName);
-                emitPreviousMessages(event.groupName,ws);
+                emitPreviousMessages(event.groupName, ws);
                 break;
             case "message":
                 console.log("Message received ");
@@ -114,7 +126,7 @@ function emitMessage(groupName, message, senderId) {
     }
 }
 
-function emitPreviousMessages(groupName, ws){
+function emitPreviousMessages(groupName, ws) {
     const messages = messagesMap.get(groupName) || [];
 
     const event = {

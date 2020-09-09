@@ -61,7 +61,7 @@ function onMessageReceived(event) {
             const el = chatMessagesCtr; // #1
             const scrollBottom = Math.floor(el.offsetHeight + el.scrollTop) === el.scrollHeight; // #2
             appendMessage(event.data);
-            
+
             if (scrollBottom) {
                 el.scrollTop = 10000000;
             }
@@ -69,6 +69,8 @@ function onMessageReceived(event) {
             break;
         case 'previousMessages':
             event.data.forEach(appendMessage);
+        
+
     }
 }
 
@@ -91,4 +93,11 @@ function getQueryParams() {
     }
 
     return params;
+}
+
+leaveGroupBtn.onclick = () => {
+    const event = {
+        event: 'leave'
+    }
+    ws.send(JSON.stringify(event));
 }
