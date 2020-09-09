@@ -57,14 +57,22 @@ function onMessageReceived(event) {
             });
             break;
         case "message":
+            //Declare variables in order
+            const el = chatMessagesCtr; // #1
+            const scrollBottom = Math.floor(el.offsetHeight + el.scrollTop) === el.scrollHeight; // #2
             appendMessage(event.data);
+            
+            if (scrollBottom) {
+                el.scrollTop = 10000000;
+            }
+
             break;
         case 'previousMessages':
             event.data.forEach(appendMessage);
     }
 }
 
-function appendMessage(message){
+function appendMessage(message) {
     const el = document.createElement('div');
     el.className = `message message-${message.sender === "me" ? "to" : "from"}`;
     el.innerHTML = `
