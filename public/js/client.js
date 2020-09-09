@@ -8,7 +8,7 @@ let chatMessagesCtr = document.querySelector("#chatMessages");
 let leaveGroupBtn = document.querySelector("#leaveGroupBtn");
 
 window.addEventListener("DOMContentLoaded", () => {
-    ws = new WebSocket(`ws://localhost:3000/ws`);
+    ws = new WebSocket(`${window.location.protocol === 'http:' ? 'ws' : 'wss'}://${window.location.host}/ws`);
     ws.addEventListener("open", onConnectionOpen);
     ws.addEventListener("message", onMessageReceived);
 });
