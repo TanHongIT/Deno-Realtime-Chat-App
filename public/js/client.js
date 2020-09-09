@@ -2,8 +2,10 @@ let ws;
 let chatUsersCtr = document.querySelector("#chatUsers");
 let chatUsersCount = document.querySelector("#chatUsersCount");
 let groupName = document.querySelector("#groupName");
+let messageInput = document.querySelector("#messageInput");
 let sendMessageForm = document.querySelector("#messageSendForm");
 let chatMessagesCtr = document.querySelector("#chatMessages");
+let leaveGroupBtn = document.querySelector("#leaveGroupBtn");
 
 window.addEventListener("DOMContentLoaded", () => {
     ws = new WebSocket(`ws://localhost:3000/ws`);
@@ -69,8 +71,6 @@ function onMessageReceived(event) {
             break;
         case 'previousMessages':
             event.data.forEach(appendMessage);
-
-
     }
 }
 

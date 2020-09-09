@@ -94,9 +94,17 @@ export default async function chat(ws) {
 function leaveGroup(userId) {
     console.log(userId);
     const userObj = usersMap.get(userId);
+    if (!userObj) {
+        return;
+    }
+
     let users = groupsMap.get(userObj.groupName) || [];
+
+    // Remove current user from users and write users back into groupsMap
     users = users.filter(u => u.userId !== userId);
     groupsMap.set(userObj.groupName, users);
+
+    // Remove userId from usersMap
     usersMap.delete(userId);
 
     emitEvent(userObj.groupName);
