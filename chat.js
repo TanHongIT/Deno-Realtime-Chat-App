@@ -100,6 +100,7 @@ function getDisplayUsers(groupName) {
 function emitMessage(groupName, message, senderId) {
     const users = groupsMap.get(groupName) || [];
     for (const user of users) {
+        console.log(`User: ${user.name}`);
         const tmpMessage = {
             ...message,
             sender: user.userId === senderId ? "me" : senderId,

@@ -3,6 +3,7 @@ let chatUsersCtr = document.querySelector("#chatUsers");
 let chatUsersCount = document.querySelector("#chatUsersCount");
 let groupName = document.querySelector("#groupName");
 let sendMessageForm = document.querySelector("#messageSendForm");
+let chatMessagesCtr = document.querySelector("#chatMessages");
 
 window.addEventListener("DOMContentLoaded", () => {
     ws = new WebSocket(`ws://localhost:3000/ws`);
@@ -54,6 +55,14 @@ function onMessageReceived(event) {
                 userEl.innerHTML = u.name;
                 chatUsersCtr.appendChild(userEl);
             });
+            break;
+        case "message":
+            const el = document.createElement('div');
+            el.className = `message message-${event.data.sender === "me" ? "to" : "from"}`;
+            el.innerHTML = `
+                ${event.data.sender === "me" ? "" : `<h4>${event.data.name}</h4>`}
+                <p class="message-text">Lorem ipsum smth</p>`;
+                chatMessagesCtr.appendChild(el);
             break;
     }
 }
