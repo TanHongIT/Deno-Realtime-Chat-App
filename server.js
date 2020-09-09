@@ -1,7 +1,7 @@
 import { listenAndServe } from "https://deno.land/std@0.67.0/http/server.ts";
 import { serveFile } from "https://deno.land/std@0.67.0/http/file_server.ts";
 import { acceptWebSocket, acceptable } from "https://deno.land/std@0.67.0/ws/mod.ts";
-import chat from './chat.js';
+import chat from './public/js/chat.js';
 listenAndServe({ port: 3000 }, async req => {
     let url = req.url;
     const position = url.indexOf('?');

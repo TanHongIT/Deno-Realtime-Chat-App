@@ -1,1 +1,3 @@
-run start server : $ deno run --allow-net server.js
+run start server : $ deno run --allow-net --allow-read server.js
+
+for ubuntu: sudo /home/user/.deno/bin/deno run --allow-net --allow-read server.js
