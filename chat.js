@@ -48,6 +48,7 @@ export default async function chat(ws) {
 
         // If event is close,
         if (isWebSocketCloseEvent(data)) {
+            console.log('Closing');
             // Take out user from usersMap
             leaveGroup(userId);
             break;

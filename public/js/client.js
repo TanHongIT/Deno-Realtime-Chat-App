@@ -69,7 +69,7 @@ function onMessageReceived(event) {
             break;
         case 'previousMessages':
             event.data.forEach(appendMessage);
-        
+
 
     }
 }
@@ -96,9 +96,5 @@ function getQueryParams() {
 }
 
 leaveGroupBtn.onclick = () => {
-    const event = {
-        event: 'leave'
-    }
-    ws.send(JSON.stringify(event));
     window.location.href = 'chat.html';
 }
