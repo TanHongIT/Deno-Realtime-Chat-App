@@ -1,8 +1,8 @@
 import { listenAndServe } from "https://deno.land/std@0.67.0/http/server.ts";
 import { serveFile } from "https://deno.land/std@0.67.0/http/file_server.ts";
 import { acceptWebSocket, acceptable } from "https://deno.land/std@0.67.0/ws/mod.ts";
-import { parse } from "https://deno.land/std@0.68.0/flags/mod.ts";
-import chat from './public/js/chat.js';
+import { parse } from "https://deno.land/std@0.67.0/flags/mod.ts";
+import chat from './chat.js';
 
 async function fileExists(path) {
     try {
