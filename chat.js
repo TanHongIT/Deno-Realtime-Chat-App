@@ -101,7 +101,7 @@ function leaveGroup(userId) {
     let users = groupsMap.get(userObj.groupName) || [];
 
     // Remove current user from users and write users back into groupsMap
-    users = users.filter(u => u.userId !== userId);
+    users = users.filter((u) => u.userId !== userId);
     groupsMap.set(userObj.groupName, users);
 
     // Remove userId from usersMap
@@ -116,15 +116,15 @@ function emitEvent(groupName) {
     for (const user of users) {
         const event = {
             event: 'users',
-            data: getDisplayUsers(groupName)
-        }
+            data: getDisplayUsers(groupName),
+        };
         user.ws.send(JSON.stringify(event));
     }
 }
 
 function getDisplayUsers(groupName) {
     const users = groupsMap.get(groupName) || [];
-    return users.map(u => {
+    return users.map((u) => {
         return { userId: u.userId, name: u.name };
     })
 }
@@ -150,7 +150,7 @@ function emitPreviousMessages(groupName, ws) {
 
     const event = {
         event: 'previousMessages',
-        data: messages
+        data: messages,
     };
     ws.send(JSON.stringify(event));
 }
