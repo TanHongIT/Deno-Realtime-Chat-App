@@ -1,37 +1,46 @@
-## Welcome to GitHub Pages
+# Welcome to Chat App Deno by TANHONGIT
+Complete the realtime chat room application implementation using Deno and WebSockets.
 
-You can use the [editor on GitHub](https://github.com/TanHongIT/Deno-Realtime-Chat-App/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+# What are WebSockets
+WebSocket is actually a protocol that enables bidirectional communication between the client and the server of a web application over a single long living TCP connection.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+# Building the application
+We are going to build the web application using:
 
-### Markdown
+- Deno v1.3.3
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
+# Runing
 
-# Header 1
-## Header 2
-### Header 3
+### 1. Clone Repo
 
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```
+$ git clone https://github.com/TanHongIT/Deno_Realtime_Chat_App
+$ cd Deno_Realtime_Chat_App
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### 2. run server at terminal
 
-### Jekyll Themes
+For windows 
+```
+$ deno run --allow-net --allow-read server.js
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/TanHongIT/Deno-Realtime-Chat-App/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+For linux ubuntu
+```
+$ sudo /home/user/.deno/bin/deno run --allow-net --allow-read server.js
+```
 
-### Support or Contact
+_**Don't forget to change "user" to the default user name for ubuntu.**_
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+_**Example**_: sudo /home/tanhongit/.deno/bin/deno run --allow-net --allow-read server.js
+
+And now go to  http://localhost:3000/
+
+------------------------------------------------------------------------------
+
+_**Read more:**_ Chat Room Realtime App With Ruby on Rails : https://github.com/TanHongIT/chat_room_rails_6
+
+<p align="center">
+     <img src="https://img.shields.io/packagist/l/doctrine/orm.svg" data-origin="https://img.shields.io/packagist/l/doctrine/orm.svg" alt="license">
+</p>
