@@ -37,11 +37,14 @@ const groupsMap = new Map();
  */
 const messagesMap = new Map();
 
+// This is called when user is connected
 export default async function chat(ws) {
     console.log('Connected');
 
+    // Generate unique userId
     const userId = v4.generate();
 
+    // Listening of WebSocket events
     for await (let data of ws) {
         console.log(data, typeof data);
         const event = typeof data === "string" ? JSON.parse(data) : data;
@@ -63,7 +66,10 @@ export default async function chat(ws) {
                     groupName: event.groupName,
                     ws,
                 };
+
+                // Put userObj inside usersMap
                 usersMap.set(userId, userObj);
+
                 const users = groupsMap.get(event.groupName) || [];
                 users.push(userObj);
                 groupsMap.set(event.groupName, users);
@@ -71,6 +77,8 @@ export default async function chat(ws) {
                 emitEvent(event.groupName);
                 emitPreviousMessages(event.groupName, ws);
                 break;
+
+            // If it is message receive
             case "message":
                 console.log("Message received ");
                 userObj = usersMap.get(userId);
@@ -93,6 +101,8 @@ export default async function chat(ws) {
 
 function leaveGroup(userId) {
     console.log(userId);
+
+    // Take out users from groupsMap
     const userObj = usersMap.get(userId);
     if (!userObj) {
         return;

@@ -1,6 +1,12 @@
 run start server : $ deno run --allow-net --allow-read server.js
 
-for ubuntu: sudo /home/user/.deno/bin/deno run --allow-net --allow-read server.js
+------------------------------------------------------------------------------------
 
+for ubuntu: sudo /home/user/.deno/bin/deno run --allow-net --allow-read server.js
+change "user" for your user name
+
+------------------------------------------------------------------------------------
+
+https://github.com/chibat/heroku-deno-getting-started
 create buildpack heroku deno:
 heroku create --buildpack https://github.com/chibat/heroku-buildpack-deno.git
