@@ -9,6 +9,12 @@ We are going to build the web application using:
 
 - Deno v1.3.3
 
+# Installation required
+
+First of all, you need to install deno for your operating system:
+https://deno.land/#installation
+
+You can customize the option and change the default deno version at the guide: https://github.com/denoland/deno_install#install-and-manage-multiple-versions
 
 # Runing
 
